@@ -1,0 +1,14 @@
+﻿<h1>Admin Dashboard</h1>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<td>
+    @Html.ActionLink("Events", "Index", "EventManagement", new { }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Performers", "Index", "PerformerManagement", new { }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Users", "Index", "UserManagement", new { }, new { @class = "btn btn-success" })
+</td>

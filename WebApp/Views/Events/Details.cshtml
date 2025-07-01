@@ -1,0 +1,70 @@
+﻿@model WebApp.ViewModels.EventVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<a asp-action="Index" class="btn btn-outline-primary mt-3">Back to List</a>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.EventName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Event.EventName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Event.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Event.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.EventTypeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Event.EventTypeName)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.Event.ImageData != null)
+    {
+        <img src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Event.ImageData))" alt="@Model.Event.ImageName" height="200" />
+    }
+    else
+    {
+        <span>No image available</span>
+    }
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Performer list")
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.EventPerformers)
+        {
+            @Html.HiddenFor(modelItem => item.EventID)
+            @Html.HiddenFor(modelItem => item.PerformerID)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerformerName)
+                </td>
+
+            </tr>
+        }
+    </tbody>

@@ -1,0 +1,118 @@
+﻿@model WebApp.ViewModels.EventVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Edit event</h1>
+
+
+<div class="col-md-4">
+    <form asp-action="Edit" enctype="multipart/form-data">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <input asp-for="Event.IDEvent" class="form-control" />
+            <span asp-validation-for="Event.IDEvent" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Event.ImageID" class="form-control" />
+            <span asp-validation-for="Event.ImageID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Event.EventName" class="control-label"></label>
+            <input asp-for="Event.EventName" class="form-control" />
+            <span asp-validation-for="Event.EventName" class="text-danger"></span>
+        </div>
+        <div class="form-group"> 
+            <label asp-for="Event.Date" class="control-label"></label>
+            <input asp-for="Event.Date" class="form-control" />
+            <span asp-validation-for="Event.Date" class="text-danger"></span>
+        </div>
+
+        <div class="form-group"> Type
+            <label asp-for="Event.EventTypeName" class="control-label"></label>
+            @Html.DropDownListFor(m => m.Event.eventTypeID,
+                     new SelectList(Model.EventTypes.ToList(), "IDEventType", "EventTypeName", Model.EventTypes.First().IDEventType),
+                     new { @class = "form-control" })
+        </div>
+
+
+
+        <div class="form-group">
+            <label asp-for="Event.Description" class="control-label"></label>
+            <input asp-for="Event.Description" class="form-control" />
+            <span asp-validation-for="Event.Description" class="text-danger"></span>
+        </div>
+
+        <div>
+            @if (Model.Event.ImageData != null)
+            {
+                <img src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Event.ImageData))" alt="@Model.Event.ImageName" height="200" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </div>
+
+        <br />
+        <div>
+            <label for="file">Change Image:</label>
+            <input type="file" id="imageFile" name="imageFile" />
+        </div>
+        <br/>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-primary" })  
+        </div>
+
+    </form>
+</div>
+<br/>
+
+
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Performer list")
+            </th>
+            <th>
+                @Html.ActionLink("Add performer", "EventPerformerAdd", new { eventID = Model.Event.IDEvent }, new { @class = "btn btn-primary" })
+            </th>
+        </tr>
+    </thead>
+
+  
+ 
+
+    <tbody>
+        @foreach (var item in Model.EventPerformers)
+        {
+            @Html.HiddenFor(modelItem => item.EventID)
+            @Html.HiddenFor(modelItem => item.PerformerID)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerformerName)
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "EventPerformerDelete", new { eventID = item.EventID, performerID = item.PerformerID }, new { @class = "btn btn-danger" })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

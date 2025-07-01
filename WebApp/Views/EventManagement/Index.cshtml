@@ -1,0 +1,70 @@
+﻿@model WebApp.ViewModels.EventVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Event management</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+@using (Html.BeginForm())
+{
+    @Html.TextBox("search")
+    <input type="submit" id="Search" value="Search" class="btn btn-primary" />
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventTypeName)
+            </th>
+            <th>Image</th>
+            <th></th>
+        </tr>
+    </thead>
+ <tbody>
+@foreach (var item in Model.Events) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+
+                <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.EventTypeName)
+                </td>
+                <td>
+                    @if (item.ImageData != null)
+                    {
+                        <img src="data:image/jpg;base64,@(Convert.ToBase64String(item.ImageData))" alt="@item.ImageName" height="100" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Manage", "Edit", new { idEvent = item.IDEvent}, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { idEvent = item.IDEvent }, new { @class = "btn btn-danger" })
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

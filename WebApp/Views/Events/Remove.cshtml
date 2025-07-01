@@ -1,0 +1,51 @@
+﻿@using System.Security.Claims
+@model WebApp.ViewModels.EventVM
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+<h1>Confirm Registration</h1>
+<hr />
+<div class="row">
+    <form asp-action="Create">
+        <div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Event.EventName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Event.EventName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Event.Date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Event.Date)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Event.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Event.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Event.EventTypeName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Event.EventTypeName)
+                </dd>
+            </dl>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="hidden" value=@Model.Event.IDEvent id="eventID" name="eventID" />
+            <input type="submit" value="Confirm" class="btn btn-primary" formmethod="post" asp-action="RegistrationRemoveConfirm" />
+            <div>
+                <a asp-action="Index" class="btn btn-outline-primary mt-3">Back to List</a>
+    </form>
+
+</div>
+
+</div>

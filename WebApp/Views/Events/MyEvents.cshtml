@@ -1,0 +1,69 @@
+﻿@model WebApp.ViewModels.EventVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>My events</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBox("search")
+    <input type="submit" id="Search" value="Search" class="btn btn-primary" />
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventTypeName)
+            </th>
+            <th>Image</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EventRegistrations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventTypeName)
+                </td>
+                <td>
+                    @if (item.ImageData != null)
+                    {
+                        <img src="data:image/jpg;base64,@(Convert.ToBase64String(item.ImageData))" alt="@item.ImageName" height="100" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "MyEventsDetails", new { idEvent = item.EventID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Remove", "Remove", new { idEvent = item.EventID }, new { @class = "btn btn-success" })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

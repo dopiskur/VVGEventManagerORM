@@ -1,0 +1,61 @@
+﻿@model WebApp.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEdit.RoleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Users) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                    @Html.ActionLink("Manage", "Edit", new { idUser = item.IDUser }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { idUser = item.IDUser }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,118 @@
+﻿@model WebApp.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $("#button").click(function () {
+        var upid = $('#hide').val();
+        var values = {
+            Username: $('#txtUsername').val(),
+            Email: $('#txtEmail').val(),
+            FirstName: $('#fname').val(),
+            LastName: $('#lname').val(),
+            Phone: $('#phone').val(),
+            Password: $('#password').val(),
+        }
+        $.ajax({
+            url: '/UserManagement/EditProfile',
+            method: 'POST',
+            data: {
+                std: values,
+                id: upid
+            },
+            success: function () {
+                alert("Updated");
+            },
+            error: function (jqXHR) {
+                $('#divErrorText').text(jqXHR.responseText);
+
+            }
+        });
+    });
+</script>
+
+<h1>Edit profile</h1>
+
+<div class="container">
+    <form method="post">
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Enter email", @id = "txtEmail" } })
+                    @Html.ValidationMessageFor(model => model.UserEdit.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.FirstName, new
+                        {
+                            htmlAttributes = new { @class = "form-control", @type = "text", @id = "fname", @placeholder = "Frist Name" }
+                        })
+                    @Html.ValidationMessageFor(model => model.UserEdit.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "lname", @placeholder = "Last Name" } })
+                    @Html.ValidationMessageFor(model => model.UserEdit.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.Phone, new { htmlAttributes = new { @class = "form-control", @id = "phone", @placeholder = "Mobile Number" } })
+                    @Html.ValidationMessageFor(model => model.UserEdit.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.Username, new { htmlAttributes = new { @class = "form-control", @type = "username", @id = "dob" } })
+                    @Html.ValidationMessageFor(model => model.UserEdit.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEdit.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEdit.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @id = "password", @placeholder = "Enter password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save Details" class="btn btn-default" id="button" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <div id="divErrorText"></div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
